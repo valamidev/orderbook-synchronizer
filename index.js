@@ -52,6 +52,7 @@ class OrderBookStore {
   }
 
   updateOrderBook(symbol, ask, bid) {
+    const memory_limit = this.memory_limit
     const data = this._data[symbol.toString()]
 
     if (typeof data == "undefined") {
@@ -62,11 +63,11 @@ class OrderBookStore {
     if (data) {
       ask.forEach(function(v) {
         Number(v.price)
-        updateIndex(data.ask, v, getSortedIndex(data.ask, v.price), this.memory_limit)
+        updateIndex(data.ask, v, getSortedIndex(data.ask, v.price), memory_limit)
       })
       bid.forEach(function(v) {
         Number(v.price)
-        updateIndex(data.bid, v, getSortedIndex(data.bid, v.price, true), this.memory_limit)
+        updateIndex(data.bid, v, getSortedIndex(data.bid, v.price, true), memory_limit)
       })
     }
   }
