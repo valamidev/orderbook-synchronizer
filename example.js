@@ -22,21 +22,33 @@
       sequenceEnd: 1556425985882
     */
 
-let OrderbookStoreClass = require("./index")
+let { OrderBookStore } = require("./index")
 
-let OrderbookStore = new OrderbookStoreClass()
+let Orderbooks = new OrderBookStore()
 
 let symbol = "BTCUSDT"
 
 let asks = [{ price: "9558.98000000", size: "0.00100800" }, { price: "9566.05000000", size: "0.00000000" }]
 let bids = [{ price: "9558.02000000", size: "0.11576700" }, { price: "9552.36000000", size: "3.00000000" }]
-
-//OrderbookStore.snapshotOrderBook(symbol, asks, bids)
-OrderbookStore.updateOrderBook(symbol, asks, bids)
-
 let asks2 = [{ price: "9551.98000001", size: "2" }, { price: "9566.05000000", size: "1.00000000" }]
 let bids2 = [{ price: "9558.02000000", size: "2" }, { price: "9552.36000000", size: "1.00000000" }]
 
-OrderbookStore.updateOrderBook(symbol, asks2, bids2)
+//OrderbookStore.snapshotOrderBook(symbol, asks, bids)
+Orderbooks.updateOrderBook(symbol, asks, bids)
 
-console.log(OrderbookStore.getOrderBook(symbol))
+Orderbooks.updateOrderBook(symbol, asks2, bids2)
+
+console.log(Orderbooks.getOrderBook(symbol))
+
+///
+
+let { Orderbook } = require("./index")
+
+let SinlgeOrderbook = new Orderbook(symbol)
+
+//OrderbookStore.snapshotOrderBook(symbol, asks, bids)
+SinlgeOrderbook.updateOrderBook(asks, bids)
+
+SinlgeOrderbook.updateOrderBook(asks2, bids2)
+
+console.log(SinlgeOrderbook.getOrderBook())

@@ -73,4 +73,35 @@ class OrderBookStore {
   }
 }
 
-module.exports = OrderBookStore
+class Orderbook {
+  constructor(symbol = "none", memory_limit = 0) {
+    this._data = {
+      ask: [],
+      bid: []
+    }
+    this.symbol = symbol
+    this.memory_limit = memory_limit
+  }
+
+  getOrderBook() {
+    return this._data
+  }
+
+  updateOrderBook(ask, bid) {
+    const memory_limit = this.memory_limit
+    const data = this._data
+
+    if (data) {
+      ask.forEach(function(v) {
+        Number(v.price)
+        updateIndex(data.ask, v, getSortedIndex(data.ask, v.price), memory_limit)
+      })
+      bid.forEach(function(v) {
+        Number(v.price)
+        updateIndex(data.bid, v, getSortedIndex(data.bid, v.price, true), memory_limit)
+      })
+    }
+  }
+}
+
+module.exports = { OrderBookStore, Orderbook }
