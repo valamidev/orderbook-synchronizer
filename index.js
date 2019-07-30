@@ -37,6 +37,7 @@ class OrderBookStore {
   constructor(memory_limit = 0) {
     this._data = {}
     this.memory_limit = memory_limit
+    this._symbols = []
   }
 
   getOrderBook(symbol) {
@@ -49,6 +50,7 @@ class OrderBookStore {
       bid: []
     }
     this.updateOrderBook(symbol, ask, bid)
+    this._symbols.push(symbol)
   }
 
   updateOrderBook(symbol, ask, bid) {
