@@ -13,7 +13,7 @@ function updateIndex(sortedArray, item, index, memory_limit = 0) {
   }
 
   if (memory_limit != 0 && sortedArray.length > memory_limit) {
-    sortedArray.length.pop()
+    sortedArray.pop()
   }
   return index === 0
 }
