@@ -48,6 +48,12 @@ class OrderBookStore {
 
   updateOrderBook(symbol, ask, bid) {
     const data = this._data[symbol.toString()]
+
+    if (typeof data == "undefined") {
+      this.snapshotOrderBook(symbol, ask, bid)
+      return
+    }
+
     if (data) {
       ask.forEach(function(v) {
         Number(v.price)

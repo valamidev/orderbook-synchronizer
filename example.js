@@ -28,13 +28,14 @@ let OrderbookStore = new OrderbookStoreClass()
 
 let symbol = "BTCUSDT"
 
-let asks = [] //[{ price: "9558.98000000", size: "0.00100800" }, { price: "9566.05000000", size: "0.00000000" }]
-let bids = [{ price: "9558.02000000", size: "0.11576700" }, { price: "9552.36000000", size: "0.00000000" }]
+let asks = [{ price: "9558.98000000", size: "0.00100800" }, { price: "9566.05000000", size: "0.00000000" }]
+let bids = [{ price: "9558.02000000", size: "0.11576700" }, { price: "9552.36000000", size: "3.00000000" }]
 
-OrderbookStore.snapshotOrderBook(symbol, asks, bids)
+//OrderbookStore.snapshotOrderBook(symbol, asks, bids)
+OrderbookStore.updateOrderBook(symbol, asks, bids)
 
 let asks2 = [{ price: "9551.98000001", size: "2" }, { price: "9566.05000000", size: "1.00000000" }]
-let bids2 = [{ price: "9558.02000000", size: "0" }, { price: "9552.36000000", size: "1.00000000" }]
+let bids2 = [{ price: "9558.02000000", size: "2" }, { price: "9552.36000000", size: "1.00000000" }]
 
 OrderbookStore.updateOrderBook(symbol, asks2, bids2)
 
