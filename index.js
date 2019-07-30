@@ -1,4 +1,4 @@
-function updateIndex(sortedArray, item, index) {
+function updateIndex(sortedArray, item, index, memory_limit = 0) {
   item.size = Number(item.size)
   item.price = Number(item.price)
 
@@ -10,6 +10,10 @@ function updateIndex(sortedArray, item, index) {
     }
   } else if (item.size !== 0) {
     sortedArray.splice(index, 0, item)
+  }
+
+  if (memory_limit != 0 && sortedArray.length > memory_limit) {
+    sortedArray.length.pop()
   }
   return index === 0
 }
@@ -30,8 +34,9 @@ function getSortedIndex(array, value, inverse) {
 }
 
 class OrderBookStore {
-  constructor() {
+  constructor(memory_limit = 0) {
     this._data = {}
+    this.memory_limit = memory_limit
   }
 
   getOrderBook(symbol) {
@@ -57,24 +62,14 @@ class OrderBookStore {
     if (data) {
       ask.forEach(function(v) {
         Number(v.price)
-        updateIndex(data.ask, v, getSortedIndex(data.ask, v.price))
+        updateIndex(data.ask, v, getSortedIndex(data.ask, v.price), this.memory_limit)
       })
       bid.forEach(function(v) {
         Number(v.price)
-        updateIndex(data.bid, v, getSortedIndex(data.bid, v.price, true))
+        updateIndex(data.bid, v, getSortedIndex(data.bid, v.price, true), this.memory_limit)
       })
     }
   }
-
-  /*
-  repairOrderbook(symbol) {
-    const data = this._data[symbol.toString()]
-
-    while (data.ask[0].price < data.bid[0].price) {
-      console.log(data.ask[0].price, data.bid[0].price)
-      data.ask.shift()
-    }
-  }*/
 }
 
 module.exports = OrderBookStore
