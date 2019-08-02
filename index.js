@@ -13,7 +13,7 @@ function updateIndex(sortedArray, item, index, memory_limit = 0) {
   }
 
   if (memory_limit != 0 && sortedArray.length > memory_limit) {
-    sortedArray.pop()
+    sortedArray.splice(memory_limit, sortedArray.length - memory_limit)
   }
   return index === 0
 }
