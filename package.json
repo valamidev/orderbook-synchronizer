@@ -7,6 +7,10 @@
     "start": "node example.js",
     "test": "jest"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valamidev/orderbook-synchronizer.git"
+  },
   "keywords": ["orderbook","exchanges"],
   "author": "",
   "license": "ISC",
