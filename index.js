@@ -94,7 +94,7 @@ class OrderBookStore {
       ask.forEach(function(v) {
         Number(v.price)
         updateIndex(data.ask, v, getSortedIndex(data.ask, v.price), memory_limit)
-        if (v.price < data.best_bid.price) {
+        if (v.price < data.best_bid.price && v.size !== 0) {
           cleanOrderbookBid(data.bid, v)
         }
         data.best_ask = data.ask[0] || {}
@@ -102,7 +102,7 @@ class OrderBookStore {
       bid.forEach(function(v) {
         Number(v.price)
         updateIndex(data.bid, v, getSortedIndex(data.bid, v.price, true), memory_limit)
-        if (v.price > data.best_ask.price) {
+        if (v.price > data.best_ask.price && v.size !== 0) {
           cleanOrderbookAsk(data.ask, v)
         }
         data.best_bid = data.bid[0] || {}
@@ -135,7 +135,7 @@ class Orderbook {
       ask.forEach(function(v) {
         Number(v.price)
         updateIndex(data.ask, v, getSortedIndex(data.ask, v.price), memory_limit)
-        if (v.price < data.best_bid.price) {
+        if (v.price < data.best_bid.price && v.size !== 0) {
           cleanOrderbookBid(data.bid, v)
         }
         data.best_ask = data.ask[0] || {}
@@ -143,7 +143,7 @@ class Orderbook {
       bid.forEach(function(v) {
         Number(v.price)
         updateIndex(data.bid, v, getSortedIndex(data.bid, v.price, true), memory_limit)
-        if (v.price > data.best_ask.price) {
+        if (v.price > data.best_ask.price && v.size !== 0) {
           cleanOrderbookAsk(data.ask, v)
         }
         data.best_bid = data.bid[0] || {}
