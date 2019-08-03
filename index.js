@@ -1,3 +1,5 @@
+"use strict"
+
 function updateIndex(sortedArray, item, index, memory_limit = 0) {
   item.size = Number(item.size)
   item.price = Number(item.price)
@@ -33,6 +35,30 @@ function getSortedIndex(array, value, inverse) {
   return low
 }
 
+function cleanOrderbookBid(array, item) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].price != "undefinied") {
+      if (item.price < array[i].price) {
+        array.splice(i, 1)
+      } else {
+        return i
+      }
+    }
+  }
+}
+
+function cleanOrderbookAsk(array, item) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].price != "undefinied") {
+      if (item.price > array[i].price) {
+        array.splice(i, 1)
+      } else {
+        return i
+      }
+    }
+  }
+}
+
 class OrderBookStore {
   constructor(memory_limit = 0) {
     this._data = {}
@@ -47,7 +73,9 @@ class OrderBookStore {
   snapshotOrderBook(symbol, ask, bid) {
     this._data[symbol.toString()] = {
       ask: [],
-      bid: []
+      bid: [],
+      best_ask: {},
+      best_bid: {}
     }
     this.updateOrderBook(symbol, ask, bid)
     this._symbols.push(symbol)
@@ -66,10 +94,18 @@ class OrderBookStore {
       ask.forEach(function(v) {
         Number(v.price)
         updateIndex(data.ask, v, getSortedIndex(data.ask, v.price), memory_limit)
+        if (v.price < data.best_bid.price) {
+          cleanOrderbookBid(data.bid, v)
+        }
+        data.best_ask = data.ask[0] || {}
       })
       bid.forEach(function(v) {
         Number(v.price)
         updateIndex(data.bid, v, getSortedIndex(data.bid, v.price, true), memory_limit)
+        if (v.price > data.best_ask.price) {
+          cleanOrderbookAsk(data.ask, v)
+        }
+        data.best_bid = data.bid[0] || {}
       })
     }
   }

@@ -24,31 +24,27 @@
 
 let { OrderBookStore } = require("./index")
 
-let Orderbooks = new OrderBookStore()
+let Orderbooks = new OrderBookStore(1000)
 
 let symbol = "BTCUSDT"
 
-let asks = [{ price: "9558.98000000", size: "0.00100800" }, { price: "9566.05000000", size: "0.00000000" }]
-let bids = [{ price: "9558.02000000", size: "0.11576700" }, { price: "9552.36000000", size: "3.00000000" }]
-let asks2 = [{ price: "9551.98000001", size: "2" }, { price: "9566.05000000", size: "1.00000000" }]
-let bids2 = [{ price: "9558.02000000", size: "2" }, { price: "9552.36000000", size: "1.00000000" }]
+let round = 300000
 
-//OrderbookStore.snapshotOrderBook(symbol, asks, bids)
+console.time("OrderbookLoop")
+
+for (let i = 0; i < round; i++) {
+  let asks = [{ price: 8000 + 2000 * Math.random(), size: 2 * Math.random() }]
+  let bids = [{ price: 8000 + 2000 * Math.random(), size: 2 * Math.random() }]
+
+  Orderbooks.updateOrderBook(symbol, asks, bids)
+}
+
+let asks = [{ price: 9500, size: 2 }]
+let bids = [{ price: 9400, size: 2 }]
+
 Orderbooks.updateOrderBook(symbol, asks, bids)
-
-Orderbooks.updateOrderBook(symbol, asks2, bids2)
+Orderbooks.updateOrderBook(symbol, asks, bids)
 
 console.log(Orderbooks.getOrderBook(symbol))
 
-///
-
-let { Orderbook } = require("./index")
-
-let SinlgeOrderbook = new Orderbook(symbol)
-
-//OrderbookStore.snapshotOrderBook(symbol, asks, bids)
-SinlgeOrderbook.updateOrderBook(asks, bids)
-
-SinlgeOrderbook.updateOrderBook(asks2, bids2)
-
-console.log(SinlgeOrderbook.getOrderBook())
+console.timeEnd("OrderbookLoop")
