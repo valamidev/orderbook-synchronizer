@@ -2,6 +2,16 @@
 
 Orderbook Websocket manager.
 
+This package allow you to keep up to date your Orderbook from a given Websocket source. 
+
+**Features:**
+- Orderbook size limit
+- Lightweight
+- Filter Bid/Ask overlaps
+
+**Usage:**
+- See example.js
+
 
 
 **Original source:**
