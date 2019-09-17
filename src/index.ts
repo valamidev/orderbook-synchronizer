@@ -1,7 +1,7 @@
 import {Order,OrderbookData} from "./interfaces"
 
 
-function updateIndex(sortedArray: Order[], item: Order, index: number, memory_limit: number = 0) {
+const updateIndex = (sortedArray: Order[], item: Order, index: number, memory_limit: number = 0) => {
   item.size = Number(item.size)
   item.price = Number(item.price)
 
@@ -21,7 +21,7 @@ function updateIndex(sortedArray: Order[], item: Order, index: number, memory_li
   return index === 0
 }
 
-function getSortedIndex(array: Order[], value: number, inverse: boolean = false) {
+const getSortedIndex = (array: Order[], value: number, inverse: boolean = false) => {
 
   let low = 0,
     high = array ? array.length : low
@@ -36,7 +36,7 @@ function getSortedIndex(array: Order[], value: number, inverse: boolean = false)
   return low
 }
 
-function cleanOrderbookBid(array: Order[], order: Order) {
+const cleanOrderbookBid = (array: Order[], order: Order) => {
   for (let i = 0; i < array.length; i++) {
       if (order.price < array[i].price) {
         array.splice(i, 1)
@@ -46,7 +46,7 @@ function cleanOrderbookBid(array: Order[], order: Order) {
   }
 }
 
-function cleanOrderbookAsk(array: Order[], order: Order) {
+const cleanOrderbookAsk = (array: Order[], order: Order) => {
   for (let i = 0; i < array.length; i++) {
       if (order.price > array[i].price) {
         array.splice(i, 1)
@@ -56,10 +56,37 @@ function cleanOrderbookAsk(array: Order[], order: Order) {
   }
 }
 
+const processOrderbookUpdate = (data:OrderbookData,ask: Order[], bid: Order[], memory_limit: number,) => {
+    for(let order of ask)
+    {
+      updateIndex(data.ask, order, getSortedIndex(data.ask, order.price, false), memory_limit)
+      if (order.price < data.best_bid.price && order.size !== 0) {
+        cleanOrderbookBid(data.bid, order)
+      }
+      data.best_ask = data.ask[0] || {}
+    }
+
+    for(let order of bid)
+    {
+      updateIndex(data.bid, order, getSortedIndex(data.bid, order.price, true), memory_limit)
+      if (order.price > data.best_ask.price && order.size !== 0) {
+        cleanOrderbookAsk(data.ask, order)
+      }
+      data.best_bid = data.bid[0] || {}
+    }
+
+    data.best_ask = data.ask[0] || {}
+    data.best_bid = data.bid[0] || {} 
+
+    return data
+}
+
+
 export class OrderBookStore {
   _data:any = {}
   private memory_limit: number
   _symbols: string[]
+
   constructor(memory_limit = 0) {
     this._data = {}
     this.memory_limit = memory_limit
@@ -83,7 +110,7 @@ export class OrderBookStore {
 
   updateOrderBook(symbol: string, ask: Order[], bid: Order[]) {
     const memory_limit = this.memory_limit
-    const data = this._data[symbol]
+    let data = this._data[symbol]
 
     if (typeof data == "undefined") {
       this.snapshotOrderBook(symbol, ask, bid)
@@ -91,28 +118,7 @@ export class OrderBookStore {
     }
 
     if (data) {
-
-      for(let order of ask)
-      {
-        updateIndex(data.ask, order, getSortedIndex(data.ask, order.price, false), memory_limit)
-        if (order.price < data.best_bid.price && order.size !== 0) {
-          cleanOrderbookBid(data.bid, order)
-        }
-        data.best_ask = data.ask[0] || {}
-      }
-
-      for(let order of bid)
-      {
-        updateIndex(data.bid, order, getSortedIndex(data.bid, order.price, true), memory_limit)
-        if (order.price > data.best_ask.price && order.size !== 0) {
-          cleanOrderbookAsk(data.ask, order)
-        }
-        data.best_bid = data.bid[0] || {}
-      }
-
-      data.best_ask = data.ask[0] || {}
-      data.best_bid = data.bid[0] || {}
-
+     data = processOrderbookUpdate(data,ask,bid,memory_limit)
     }
   }
 }
@@ -139,33 +145,13 @@ export class Orderbook {
 
   updateOrderBook(ask: Order[], bid: Order[]) {
     const memory_limit = this.memory_limit
-    const data = this._data
+    let data = this._data
 
-    if (data) {
-
-      for(let order of ask)
-      {
-        updateIndex(data.ask, order, getSortedIndex(data.ask, order.price, false), memory_limit)
-        if (order.price < data.best_bid.price && order.size !== 0) {
-          cleanOrderbookBid(data.bid, order)
-        }
-        data.best_ask = data.ask[0] || {}
-      }
-
-      for(let order of bid)
-      {
-        updateIndex(data.bid, order, getSortedIndex(data.bid, order.price, true), memory_limit)
-        if (order.price > data.best_ask.price && order.size !== 0) {
-          cleanOrderbookAsk(data.ask, order)
-        }
-        data.best_bid = data.bid[0] || {}
-      }
-
-      data.best_ask = data.ask[0] || {}
-      data.best_bid = data.bid[0] || {}
-
-    }
+    data = processOrderbookUpdate(data,ask,bid,memory_limit)
+    
   }
+
+
 }
 
 
