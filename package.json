@@ -1,20 +1,33 @@
 {
   "name": "orderbook-synchronizer",
-  "version": "2.1.2",
-  "description": "",
-  "main": "index.js",
+  "version": "3.0.2",
+  "description": "Orderbook Synchronizer for Cryptocurrency exchanges",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "start": "node example.js",
-    "test": "jest"
+    "build" : "tsc",
+    "prepublish": "tsc",
+    "test": "jest --config jestconfig.json"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/valamidev/orderbook-synchronizer.git"
   },
-  "keywords": ["orderbook","exchanges"],
+  "keywords": [
+    "orderbook",
+    "exchanges"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^24.8.0"
-  }
+    "@types/jest": "^24.0.18",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.19.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.6.2"
+  },
+  "files": ["lib/**/*"]
 }
