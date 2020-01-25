@@ -1,12 +1,12 @@
 {
   "name": "orderbook-synchronizer",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Orderbook Synchronizer for Cryptocurrency exchanges",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "start": "node example.js",
-    "build" : "tsc",
+    "build": "tsc",
     "prepublish": "tsc",
     "test": "jest --config jestconfig.json"
   },
@@ -29,5 +29,7 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.6.2"
   },
-  "files": ["lib/**/*"]
+  "files": [
+    "lib/**/*"
+  ]
 }
