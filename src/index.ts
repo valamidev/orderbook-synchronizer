@@ -15,7 +15,7 @@ const updateIndex = (sortedArray: Order[], item: Order, index: number, memory_li
     sortedArray.splice(index, 0, item)
   }
 
-  if (memory_limit != 0 && sortedArray.length > memory_limit) {
+  if (memory_limit !== 0 && sortedArray.length > memory_limit) {
     sortedArray.splice(memory_limit, sortedArray.length - memory_limit)
   }
   return index === 0
@@ -23,10 +23,12 @@ const updateIndex = (sortedArray: Order[], item: Order, index: number, memory_li
 
 const getSortedIndex = (array: Order[], value: number, inverse: boolean = false) => {
 
-  let low = 0,
-    high = array ? array.length : low
+  let low = 0;
+  let  high = array ? array.length : low;
+  
   while (low < high) {
-    let mid = (low + high) >>> 1
+    // tslint:disable-next-line: no-bitwise
+    const mid = (low + high) >>> 1
     if ((!inverse && +array[mid].price < +value) || (inverse && +array[mid].price > +value)) {
       low = mid + 1
     } else {
@@ -57,7 +59,7 @@ const cleanOrderbookAsk = (array: Order[], order: Order) => {
 }
 
 const processOrderbookUpdate = (data:OrderbookData,ask: Order[], bid: Order[], memory_limit: number,) => {
-    for(let order of ask)
+    for(const order of ask)
     {
       updateIndex(data.ask, order, getSortedIndex(data.ask, order.price, false), memory_limit)
       if (order.price < data.best_bid.price && order.size !== 0) {
@@ -66,7 +68,7 @@ const processOrderbookUpdate = (data:OrderbookData,ask: Order[], bid: Order[], m
       data.best_ask = data.ask[0] || {}
     }
 
-    for(let order of bid)
+    for(const order of bid)
     {
       updateIndex(data.bid, order, getSortedIndex(data.bid, order.price, true), memory_limit)
       if (order.price > data.best_ask.price && order.size !== 0) {
@@ -110,7 +112,7 @@ export class OrderBookStore {
 
   updateOrderBook(symbol: string, ask: Order[], bid: Order[]) {
     const memory_limit = this.memory_limit
-    let data = this._data[symbol]
+    const data = this._data[symbol]
 
     if (typeof data == "undefined") {
       this.snapshotOrderBook(symbol, ask, bid)
@@ -118,7 +120,7 @@ export class OrderBookStore {
     }
 
     if (data) {
-     data = processOrderbookUpdate(data,ask,bid,memory_limit)
+     processOrderbookUpdate(data,ask,bid,memory_limit)
     }
   }
 }
@@ -139,15 +141,15 @@ export class Orderbook {
     this.memory_limit = memory_limit
   }
 
-  getOrderBook() {
+  public getOrderBook() {
     return this._data
   }
 
-  updateOrderBook(ask: Order[], bid: Order[]) {
+  public updateOrderBook(ask: Order[], bid: Order[]) {
     const memory_limit = this.memory_limit
-    let data = this._data
+    const data = this._data
 
-    data = processOrderbookUpdate(data,ask,bid,memory_limit)
+    processOrderbookUpdate(data,ask,bid,memory_limit)
     
   }
 
