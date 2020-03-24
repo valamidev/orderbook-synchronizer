@@ -1,4 +1,12 @@
 {
+  "globals": {
+    "ts-jest": {
+      "diagnostics": {
+        "ignoreCodes": [2532]
+      }
+    }
+  },
+
   "transform": {
     ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
   },
