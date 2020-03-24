@@ -1,27 +1,3 @@
-/*
-      {
-        eventType: 'depthUpdate',
-        eventTime: 1564411435348,
-        symbol: 'BTCUSDT',
-        firstUpdateId: 905213181,
-        finalUpdateId: 905213198,
-        bidDepth: [
-          { price: '9558.02000000', quantity: '0.11576700' },
-          { price: '9552.36000000', quantity: '0.00000000' }
-        ],
-        askDepth: [
-          { price: '9558.98000000', quantity: '0.00100800' },
-          { price: '9566.05000000', quantity: '0.00000000' },
-        ]
-      }
-    */
-/*
-      sequenceStart: 1556425985882,
-      symbol: 'XRP-BTC',
-      changes: { asks: [], bids: [ [ '0.00003232', '5240.6325', '1556426078793' ] ] }, 
-      sequenceEnd: 1556425985882
-    */
-
 import { OrderBookStore, Orderbook } from '../index';
 
 describe('Orderbook Synchronizer', () => {
@@ -64,6 +40,27 @@ describe('Orderbook Synchronizer', () => {
     let OrderBookResult = OrderBooks.getOrderBook(symbol);
 
     expect(OrderBookResult.best_bid.price).toBe(OrderBookResult.best_ask.price);
+  });
+
+  it('should store and handle Orderbook Symbols', () => {
+    const OrderBooks = new OrderBookStore(10);
+
+    const symbol = 'BTCUSDT';
+
+    const round = 11;
+
+    for (let i = 0; i < round; i++) {
+      const asks = [{ price: 8000 + i, size: 2 * Math.random() }];
+      const bids = [{ price: 6000 + i, size: 2 * Math.random() }];
+
+      OrderBooks.updateOrderBook(symbol, asks, bids);
+    }
+
+    expect(OrderBooks.getSymbolList()).toStrictEqual(expect.any(Array));
+    expect(OrderBooks.hasOrderBook(symbol)).toBe(true);
+    expect(OrderBooks.hasOrderBook('none')).toBe(false);
+    expect(OrderBooks.getOrderBook(symbol)).toStrictEqual(expect.any(Object));
+    expect(OrderBooks.getOrderBook('none')).toBe(undefined);
   });
 
   it('OrderBook Memory limit Test', () => {

@@ -65,10 +65,10 @@ OrderBooks.hasOrderBook('BTC/USD'); // return boolean if Orderbook exist
 OrderBooks.getOrderBook('BTC/USD'); // return Orderbook | undefined depends on Orderbook exist
 ```
 
-#### listOrderBooks:
+#### getSymbolList:
 
 ```
-OrderBooks.listOrderBooks(); // return all Orderbook keys in array ['BTC/USD']
+OrderBooks.getSymbolList(); // return all Orderbook keys in array ['BTC/USD']
 ```
 
 ## Available methods(Orderbook):

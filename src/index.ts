@@ -90,8 +90,8 @@ export class OrderBookStore {
     this.memory_limit = memory_limit;
   }
 
-  public listOrderBooks(): string[] {
-    return Object.keys(this._data);
+  public getSymbolList(): string[] {
+    return [...this._data.keys()];
   }
 
   public hasOrderBook(symbol: string): boolean {

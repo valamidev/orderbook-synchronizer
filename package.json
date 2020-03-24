@@ -1,6 +1,6 @@
 {
   "name": "orderbook-synchronizer",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Orderbook Synchronizer for Cryptocurrency exchanges",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
