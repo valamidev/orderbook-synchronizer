@@ -1,13 +1,14 @@
 {
   "name": "orderbook-synchronizer",
-  "version": "4.0.1",
-  "description": "Orderbook Synchronizer for Cryptocurrency exchanges",
+  "version": "4.0.11",
+  "description": "Orderbook Synchronizer for cryptocurrency exchanges",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "start": "node example.js",
+    "prebuild": "rimraf lib",
     "build": "tsc",
-    "prepublish": "tsc",
+    "prepublish": "rimraf lib && tsc",
     "test": "jest",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
@@ -17,7 +18,12 @@
   },
   "keywords": [
     "orderbook",
-    "exchanges"
+    "exchanges",
+    "binance",
+    "ccxt",
+    "algotrading",
+    "realtime",
+    "api"
   ],
   "author": "",
   "license": "ISC",
@@ -26,6 +32,7 @@
     "coveralls": "^3.0.11",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
+    "rimraf": "^3.0.2",
     "ts-jest": "^24.0.2",
     "tslint": "^5.19.0",
     "tslint-config-prettier": "^1.18.0",
