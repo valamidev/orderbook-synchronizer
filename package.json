@@ -8,7 +8,8 @@
     "start": "node example.js",
     "build": "tsc",
     "prepublish": "tsc",
-    "test": "jest --config jestconfig.json"
+    "test": "jest",
+    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^24.9.1",
+    "coveralls": "^3.0.11",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "ts-jest": "^24.0.2",
