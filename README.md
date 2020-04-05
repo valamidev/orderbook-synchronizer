@@ -1,7 +1,7 @@
 # Orderbook Synchronizer
 
-![npm](https://img.shields.io/npm/v/orderbook-synchronizer)
-![npm](https://img.shields.io/npm/dy/orderbook-synchronizer)
+[![npm](https://img.shields.io/npm/v/orderbook-synchronizer)](https://www.npmjs.com/package/orderbook-synchronizer)
+[![npm](https://img.shields.io/npm/dy/orderbook-synchronizer)](https://www.npmjs.com/package/orderbook-synchronizer)
 [![Coverage Status](https://coveralls.io/repos/github/valamidev/orderbook-synchronizer/badge.svg)](https://coveralls.io/github/valamidev/orderbook-synchronizer)
 
 This package allow you to keep update your Orderbook snapshot from a given Websocket source of Orders.
