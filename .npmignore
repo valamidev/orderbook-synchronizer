@@ -4,7 +4,8 @@
 .gitignore
 .lintstagedrc.json
 .nycrc
-.prettierrc.json
+.prettierrc
+.coveralls.yml
 
 tsconfig.json
 jest.config.js

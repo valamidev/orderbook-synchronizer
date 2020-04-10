@@ -1,6 +1,6 @@
 {
   "name": "orderbook-synchronizer",
-  "version": "4.0.11",
+  "version": "5.0.0",
   "description": "Orderbook Synchronizer for cryptocurrency exchanges",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -10,7 +10,9 @@
     "build": "tsc",
     "prepublish": "rimraf lib && tsc",
     "test": "jest",
-    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
+    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
   },
   "repository": {
     "type": "git",
@@ -28,15 +30,28 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/jest": "^24.9.1",
     "coveralls": "^3.0.11",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.12.26",
+    "@types/request": "^2.48.4",
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-typescript": "^7.2.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "husky": "^4.2.3",
     "jest": "^24.9.0",
-    "prettier": "^1.18.2",
+    "lint-staged": "^10.1.1",
+    "prettier": "^2.0.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^24.0.2",
-    "tslint": "^5.19.0",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.6.2"
+    "ts-node": "^8.4.1",
+    "typescript": "^3.8.0"
   },
   "files": [
     "lib/**/*"

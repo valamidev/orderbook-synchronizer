@@ -1,5 +1,6 @@
 # Orderbook Synchronizer
 
+[![DeepScan grade](https://deepscan.io/api/teams/6761/projects/8876/branches/113562/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=6761&pid=8876&bid=113562)
 [![npm](https://img.shields.io/npm/v/orderbook-synchronizer)](https://www.npmjs.com/package/orderbook-synchronizer)
 [![npm](https://img.shields.io/npm/dy/orderbook-synchronizer)](https://www.npmjs.com/package/orderbook-synchronizer)
 [![Coverage Status](https://coveralls.io/repos/github/valamidev/orderbook-synchronizer/badge.svg)](https://coveralls.io/github/valamidev/orderbook-synchronizer)
@@ -16,23 +17,21 @@ This package allow you to keep update your Orderbook snapshot from a given Webso
 
 ```
 {
-      ask: [
-        { price: 8000, size: 1.9869372781826433 },
-        { price: 8001, size: 0.6590219188159661 },
-        { price: 8002, size: 1.0430790809329253 },
-        { price: 8003, size: 0.12794162550163035 },
-        { price: 8004, size: 1.3397780002928084 },
-        { price: 8005, size: 1.8250517469118535 },
+      asks: [
+        [8000, 1.9869372781826433],
+        [8001, 0.6590219188159661],
+        [8002, 1.0430790809329253],
+        [8003, 0.1279416255016304],
+        [8004, 1.3397780002928084],
+        [8005, 1.8250517469118535],
       ],
-      bid: [
-        { price: 6020, size: 1.5764351751676466 },
-        { price: 6019, size: 1.9678679870588733 },
-        { price: 6018, size: 1.7349295266546774 },
-        { price: 6017, size: 1.0087743314824977 },
-        { price: 6016, size: 0.09423390709772583 },
-      ],
-      best_ask: { price: 8000, size: 1.9869372781826433 },
-      best_bid: { price: 6020, size: 1.5764351751676466 }
+      bids: [
+        [6020, 1.5764351751676466],
+        [6019, 1.9678679870588733],
+        [6018, 1.7349295266546774],
+        [6017, 1.0087743314824977],
+        [6016, 0.0942339070977258],
+      ]
 }
 ```
 
@@ -54,7 +53,7 @@ const OrderBooks = new OrderBookStore(1000); // Set memory limit / maximum lengt
 #### updateOrderBook:
 
 ```
-OrderBooks.updateOrderBook('BTC/USD', ask: Order[], bid: Order[]); // Create/Update Orderbook
+OrderBooks.updateOrderBook('BTC/USD', asks: Order[], bids: Order[]); // Create/Update Orderbook
 ```
 
 #### hasOrderBook:
@@ -92,7 +91,7 @@ SingleOrderBook.getOrderBook(); // return Orderbook
 #### updateOrderBook:
 
 ```
-SingleOrderBook.updateOrderBook(ask: Order[], bid: Order[]); // Update Orderbook
+SingleOrderBook.updateOrderBook(asks: Order[], bids: Order[]); // Update Orderbook
 ```
 
 **Original inspiration source:**
