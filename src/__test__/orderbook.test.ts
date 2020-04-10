@@ -15,7 +15,7 @@ describe('Orderbook Synchronizer', () => {
       OrderBooks.updateOrderBook(symbol, asks, bids);
     }
 
-    expect(OrderBooks.getOrderBook(symbol).ask.length).toBe(1000);
+    expect(OrderBooks.getOrderBook(symbol).asks.length).toBe(1000);
   });
 
   it('OrderBookStore Cleanup Test', () => {
@@ -77,7 +77,7 @@ describe('Orderbook Synchronizer', () => {
       SingleOrderBook.updateOrderBook(asks, bids);
     }
 
-    expect(SingleOrderBook.getOrderBook().ask.length).toBe(1000);
+    expect(SingleOrderBook.getOrderBook().asks.length).toBe(1000);
   });
 
   it('OrderBookCleanup Test', () => {

@@ -6,8 +6,8 @@ export interface Order {
 
 // tslint:disable-next-line: interface-name
 export interface OrderbookData {
-  ask: Order[];
-  bid: Order[];
+  asks: Order[];
+  bids: Order[];
   best_ask?: Order;
   best_bid?: Order;
 }
