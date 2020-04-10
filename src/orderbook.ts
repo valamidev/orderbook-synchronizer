@@ -6,7 +6,7 @@ export class Orderbook {
   protected symbol: string;
   private memory_limit: number;
 
-  constructor(symbol = 'none', memory_limit = 0, verbose = true) {
+  constructor(symbol = 'none', memory_limit = 0) {
     this._data = {
       asks: [],
       bids: [],

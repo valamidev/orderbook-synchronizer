@@ -1,17 +1,17 @@
 import { Order, OrderbookData } from './types';
 
-export const updateIndex = (sortedArray: Order[], item: Order, index: number, memory_limit: number = 0) => {
-  item.size = Number(item.size);
-  item.price = Number(item.price);
+const updateIndex = (sortedArray: Order[], order: Order, index: number, memory_limit: number = 0) => {
+  const price = Number(order[0]);
+  const amount = Number(order[1]);
 
-  if (index < sortedArray.length && Number(sortedArray[index].price) === item.price) {
-    if (item.size === 0) {
+  if (index < sortedArray.length && Number(sortedArray[index][0]) === price) {
+    if (amount === 0) {
       sortedArray.splice(index, 1);
     } else {
-      sortedArray[index].size = item.size;
+      sortedArray[index][1] = amount;
     }
-  } else if (item.size !== 0) {
-    sortedArray.splice(index, 0, item);
+  } else if (amount !== 0) {
+    sortedArray.splice(index, 0, order);
   }
 
   if (memory_limit !== 0 && sortedArray.length > memory_limit) {
@@ -20,14 +20,14 @@ export const updateIndex = (sortedArray: Order[], item: Order, index: number, me
   return index === 0;
 };
 
-export const getSortedIndex = (array: Order[], value: number, inverse: boolean = false) => {
+const getSortedIndex = (array: Order[], price: number, inverse: boolean = false) => {
   let low = 0;
   let high = array ? array.length : low;
 
   while (low < high) {
-    // tslint:disable-next-line: no-bitwise
     const mid = (low + high) >>> 1;
-    if ((!inverse && +array[mid].price < +value) || (inverse && +array[mid].price > +value)) {
+
+    if ((!inverse && +array[mid][0] < +price) || (inverse && +array[mid][0] > +price)) {
       low = mid + 1;
     } else {
       high = mid;
@@ -36,47 +36,48 @@ export const getSortedIndex = (array: Order[], value: number, inverse: boolean =
   return low;
 };
 
-export const cleanOrderbookBid = (array: Order[], order: Order) => {
+const cleanOrderbookBid = (array: Order[], price: number) => {
   for (let i = 0; i < array.length; i++) {
-    if (order.price < array[i].price) {
+    if (price < array[i][0]) {
       array.splice(i, 1);
     } else {
-      return i;
+      return;
     }
   }
 };
 
-export const cleanOrderbookAsk = (array: Order[], order: Order) => {
+const cleanOrderbookAsk = (array: Order[], price: number) => {
   for (let i = 0; i < array.length; i++) {
-    if (order.price > array[i].price) {
+    if (price > array[i][0]) {
       array.splice(i, 1);
     } else {
-      return i;
+      return;
     }
   }
 };
 
 export const processOrderbookUpdate = (data: OrderbookData, asks: Order[], bids: Order[], memory_limit: number) => {
   for (const order of asks) {
-    updateIndex(data.asks, order, getSortedIndex(data.asks, order.price, false), memory_limit);
+    const price = Number(order[0]);
+    const amount = Number(order[1]);
 
-    if (data.best_bid && order.price < data.best_bid.price && order.size !== 0) {
-      cleanOrderbookBid(data.bids, order);
+    updateIndex(data.asks, order, getSortedIndex(data.asks, price, false), memory_limit);
+
+    if (amount !== 0 && data.asks[0]?.[0] < data.bids[0]?.[0]) {
+      cleanOrderbookBid(data.bids, data.asks[0]?.[0]);
     }
-
-    data.best_ask = data.asks[0] || {};
   }
 
   for (const order of bids) {
-    updateIndex(data.bids, order, getSortedIndex(data.bids, order.price, true), memory_limit);
-    if (data.best_ask && order.price > data.best_ask.price && order.size !== 0) {
-      cleanOrderbookAsk(data.asks, order);
-    }
-    data.best_bid = data.bids[0] || {};
-  }
+    const price = Number(order[0]);
+    const amount = Number(order[1]);
 
-  data.best_ask = data.asks[0] || {};
-  data.best_bid = data.bids[0] || {};
+    updateIndex(data.bids, order, getSortedIndex(data.bids, price, true), memory_limit);
+
+    if (amount !== 0 && data.bids[0]?.[0] > data.asks[0]?.[0]) {
+      cleanOrderbookAsk(data.asks, data.bids[0]?.[0]);
+    }
+  }
 
   return data;
 };

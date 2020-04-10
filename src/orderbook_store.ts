@@ -5,7 +5,7 @@ export class OrderBookStore {
   _data: Map<string, OrderbookData | undefined>;
   private memory_limit: number;
 
-  constructor(memory_limit = 0, verbose = true) {
+  constructor(memory_limit = 0) {
     this._data = new Map();
     this.memory_limit = memory_limit;
   }
