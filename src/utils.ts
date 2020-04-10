@@ -55,7 +55,12 @@ const cleanOrderbookAsk = (array: Order[], price: number): void => {
   }
 };
 
-export const processOrderbookUpdate = (data: OrderbookData, asks: Order[], bids: Order[], memoryLimit: number): OrderbookData => {
+export const processOrderbookUpdate = (
+  data: OrderbookData,
+  asks: Order[],
+  bids: Order[],
+  memoryLimit: number,
+): OrderbookData => {
   for (const order of asks) {
     const price = Number(order[0]);
     const amount = Number(order[1]);
