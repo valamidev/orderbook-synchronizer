@@ -3,11 +3,11 @@ import { processOrderbookUpdate } from './utils';
 
 export class OrderBookStore {
   _data: Map<string, OrderbookData | undefined>;
-  private memory_limit: number;
+  private memoryLimit: number;
 
-  constructor(memory_limit = 0) {
+  constructor(memoryLimit = 0) {
     this._data = new Map();
-    this.memory_limit = memory_limit;
+    this.memoryLimit = memoryLimit;
   }
 
   public getSymbolList(): string[] {
@@ -23,14 +23,14 @@ export class OrderBookStore {
   }
 
   public updateOrderBook(symbol: string, asks: Order[], bids: Order[]): void {
-    const memory_limit = this.memory_limit;
+    const { memoryLimit } = this;
     const data = this._data.get(symbol);
 
     if (data) {
-      this._data.set(symbol, processOrderbookUpdate({ ...data }, asks, bids, memory_limit));
+      this._data.set(symbol, processOrderbookUpdate({ ...data }, asks, bids, memoryLimit));
       return;
     }
 
-    this._data.set(symbol, processOrderbookUpdate({ asks: [], bids: [] }, asks, bids, memory_limit));
+    this._data.set(symbol, processOrderbookUpdate({ asks: [], bids: [] }, asks, bids, memoryLimit));
   }
 }

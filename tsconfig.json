@@ -12,11 +12,11 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "./lib",
-    "baseUrl": ".",    
-    "strict": true,   
+    "baseUrl": ".",
+    "strict": true,
     "pretty": true,
     "removeComments": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "src/__test__","build"]
+  "exclude": ["node_modules", "src/__test__", "lib"]
 }

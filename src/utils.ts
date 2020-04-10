@@ -1,6 +1,6 @@
 import { Order, OrderbookData } from './types';
 
-const updateIndex = (sortedArray: Order[], order: Order, index: number, memory_limit: number = 0) => {
+const updateIndex = (sortedArray: Order[], order: Order, index: number, memoryLimit = 0): void => {
   const price = Number(order[0]);
   const amount = Number(order[1]);
 
@@ -8,19 +8,18 @@ const updateIndex = (sortedArray: Order[], order: Order, index: number, memory_l
     if (amount === 0) {
       sortedArray.splice(index, 1);
     } else {
-      sortedArray[index][1] = amount;
+      sortedArray.splice(index, 1, order);
     }
   } else if (amount !== 0) {
     sortedArray.splice(index, 0, order);
   }
 
-  if (memory_limit !== 0 && sortedArray.length > memory_limit) {
-    sortedArray.splice(memory_limit, sortedArray.length - memory_limit);
+  if (memoryLimit !== 0 && sortedArray.length > memoryLimit) {
+    sortedArray.splice(memoryLimit, sortedArray.length - memoryLimit);
   }
-  return index === 0;
 };
 
-const getSortedIndex = (array: Order[], price: number, inverse: boolean = false) => {
+const getSortedIndex = (array: Order[], price: number, inverse = false): number => {
   let low = 0;
   let high = array ? array.length : low;
 
@@ -36,7 +35,7 @@ const getSortedIndex = (array: Order[], price: number, inverse: boolean = false)
   return low;
 };
 
-const cleanOrderbookBid = (array: Order[], price: number) => {
+const cleanOrderbookBid = (array: Order[], price: number): void => {
   for (let i = 0; i < array.length; i++) {
     if (price < array[i][0]) {
       array.splice(i, 1);
@@ -46,7 +45,7 @@ const cleanOrderbookBid = (array: Order[], price: number) => {
   }
 };
 
-const cleanOrderbookAsk = (array: Order[], price: number) => {
+const cleanOrderbookAsk = (array: Order[], price: number): void => {
   for (let i = 0; i < array.length; i++) {
     if (price > array[i][0]) {
       array.splice(i, 1);
@@ -56,12 +55,12 @@ const cleanOrderbookAsk = (array: Order[], price: number) => {
   }
 };
 
-export const processOrderbookUpdate = (data: OrderbookData, asks: Order[], bids: Order[], memory_limit: number) => {
+export const processOrderbookUpdate = (data: OrderbookData, asks: Order[], bids: Order[], memoryLimit: number): OrderbookData => {
   for (const order of asks) {
     const price = Number(order[0]);
     const amount = Number(order[1]);
 
-    updateIndex(data.asks, order, getSortedIndex(data.asks, price, false), memory_limit);
+    updateIndex(data.asks, order, getSortedIndex(data.asks, price, false), memoryLimit);
 
     if (amount !== 0 && data.asks[0]?.[0] < data.bids[0]?.[0]) {
       cleanOrderbookBid(data.bids, data.asks[0]?.[0]);
@@ -72,7 +71,7 @@ export const processOrderbookUpdate = (data: OrderbookData, asks: Order[], bids:
     const price = Number(order[0]);
     const amount = Number(order[1]);
 
-    updateIndex(data.bids, order, getSortedIndex(data.bids, price, true), memory_limit);
+    updateIndex(data.bids, order, getSortedIndex(data.bids, price, true), memoryLimit);
 
     if (amount !== 0 && data.bids[0]?.[0] > data.asks[0]?.[0]) {
       cleanOrderbookAsk(data.asks, data.bids[0]?.[0]);

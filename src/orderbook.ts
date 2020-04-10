@@ -4,27 +4,25 @@ import { processOrderbookUpdate } from './utils';
 export class Orderbook {
   _data: OrderbookData;
   protected symbol: string;
-  private memory_limit: number;
+  private memoryLimit: number;
 
-  constructor(symbol = 'none', memory_limit = 0) {
+  constructor(symbol = 'none', memoryLimit = 0) {
     this._data = {
       asks: [],
       bids: [],
     };
     this.symbol = symbol;
-    this.memory_limit = memory_limit;
+    this.memoryLimit = memoryLimit;
   }
 
-  public getOrderBook() {
+  public getOrderBook(): OrderbookData {
     return this._data;
   }
 
   public updateOrderBook(asks: Order[], bids: Order[]): void {
-    const memory_limit = this.memory_limit;
+    const { memoryLimit } = this;
     const data = this._data;
 
-    this._data = processOrderbookUpdate({ ...data }, asks, bids, memory_limit);
-
-    return;
+    this._data = processOrderbookUpdate({ ...data }, asks, bids, memoryLimit);
   }
 }

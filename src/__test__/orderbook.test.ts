@@ -16,17 +16,15 @@ describe('Orderbook Synchronizer', () => {
       OrderBooks.updateOrderBook(symbol, asks, bids);
     }
 
-    let OrderBookResult = OrderBooks.getOrderBook(symbol);
-
     expect(OrderBooks.getOrderBook(symbol).asks).toHaveLength(1000);
   });
 
   it('OrderBookStore Cleanup Test', () => {
     const OrderBooks = new OrderBookStore(1000);
 
-    let symbol = 'BTCUSDT';
+    const symbol = 'BTCUSDT';
 
-    let round = 10000;
+    const round = 10000;
 
     for (let i = 0; i < round; i++) {
       const asks: Order[] = [[100 * Math.random(), 2 * Math.random()]];
@@ -39,7 +37,7 @@ describe('Orderbook Synchronizer', () => {
     OrderBooks.updateOrderBook(symbol, [[90, 2]], [[90, 2]]);
     OrderBooks.updateOrderBook(symbol, [[90, 2]], [[90, 2]]);
 
-    let OrderBookResult = OrderBooks.getOrderBook(symbol);
+    const OrderBookResult = OrderBooks.getOrderBook(symbol);
 
     expect(OrderBookResult.bids[0][0]).toBeLessThanOrEqual(OrderBookResult.asks[0][0]);
   });
@@ -66,11 +64,11 @@ describe('Orderbook Synchronizer', () => {
   });
 
   it('OrderBook Memory limit Test', () => {
-    let symbol = 'BTCUSDT';
+    const symbol = 'BTCUSDT';
 
     const SingleOrderBook = new Orderbook(symbol, 1000);
 
-    let round = 1001;
+    const round = 1001;
 
     for (let i = 0; i < round; i++) {
       const asks: Order[] = [[8000 + i, 2 * Math.random()]];
@@ -83,11 +81,11 @@ describe('Orderbook Synchronizer', () => {
   });
 
   it('OrderBookCleanup Test', () => {
-    let symbol = 'BTCUSDT';
+    const symbol = 'BTCUSDT';
 
     const SingleOrderBook = new Orderbook(symbol, 1000);
 
-    let round = 10000;
+    const round = 10000;
 
     for (let i = 0; i < round; i++) {
       const asks: Order[] = [[100 * Math.random(), 2 * Math.random()]];
@@ -100,7 +98,7 @@ describe('Orderbook Synchronizer', () => {
     SingleOrderBook.updateOrderBook([[90, 2]], [[90, 2]]);
     SingleOrderBook.updateOrderBook([[90, 2]], [[90, 2]]);
 
-    let OrderBookResult = SingleOrderBook.getOrderBook();
+    const OrderBookResult = SingleOrderBook.getOrderBook();
 
     expect(OrderBookResult.bids[0][0]).toBeLessThanOrEqual(OrderBookResult.asks[0][0]);
   });

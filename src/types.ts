@@ -1,3 +1,4 @@
+/** [price, amount] */
 export type Order = [number, number];
 
 export interface OrderbookData {
