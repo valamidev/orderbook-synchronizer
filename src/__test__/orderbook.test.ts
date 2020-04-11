@@ -24,7 +24,7 @@ describe('Orderbook Synchronizer', () => {
 
     const symbol = 'BTCUSDT';
 
-    const round = 10000;
+    const round = 1000000;
 
     for (let i = 0; i < round; i++) {
       const asks: Order[] = [[100 * Math.random(), 2 * Math.random()]];
@@ -85,7 +85,7 @@ describe('Orderbook Synchronizer', () => {
 
     const SingleOrderBook = new Orderbook(symbol, 1000);
 
-    const round = 10000;
+    const round = 1000000;
 
     for (let i = 0; i < round; i++) {
       const asks: Order[] = [[100 * Math.random(), 2 * Math.random()]];

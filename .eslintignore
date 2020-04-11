@@ -1,0 +1,6 @@
+node_modules
+lib
+types
+*__test__
+jest.config.js
+package-lock.json
