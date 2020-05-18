@@ -15,7 +15,7 @@ This package allow you to keep update your Orderbook snapshot from a given Webso
 
 **Orderbook output sample(`.getOrderBook()`):**
 
-```
+```javascript
 {
       asks: [
         [8000, 1.9869372781826433],
@@ -37,7 +37,7 @@ This package allow you to keep update your Orderbook snapshot from a given Webso
 
 **Imports:**
 
-```
+```javascript
 import {OrderBookStore} from 'orderbook-synchronizer'; // Multiple OrderBooks in a single class
 import {Orderbook} from 'orderbook-synchronizer'; // Single OrderBook
 ```
@@ -46,31 +46,31 @@ import {Orderbook} from 'orderbook-synchronizer'; // Single OrderBook
 
 #### Constructor:
 
-```
+```javascript
 const OrderBooks = new OrderBookStore(1000); // Set memory limit / maximum length of Ask/Bid array
 ```
 
 #### updateOrderBook:
 
-```
+```javascript
 OrderBooks.updateOrderBook('BTC/USD', asks: Order[], bids: Order[]); // Create/Update Orderbook
 ```
 
 #### hasOrderBook:
 
-```
+```javascript
 OrderBooks.hasOrderBook('BTC/USD'); // return boolean if Orderbook exist
 ```
 
 #### getOrderBook:
 
-```
+```javascript
 OrderBooks.getOrderBook('BTC/USD'); // return Orderbook | undefined depends on Orderbook exist
 ```
 
 #### getSymbolList:
 
-```
+```javascript
 OrderBooks.getSymbolList(); // return all Orderbook keys in array ['BTC/USD']
 ```
 
@@ -78,19 +78,19 @@ OrderBooks.getSymbolList(); // return all Orderbook keys in array ['BTC/USD']
 
 #### Constructor:
 
-```
+```javascript
 const SingleOrderBook = new Orderbook(1000); // Set memory limit / maximum length of Ask/Bid array
 ```
 
 #### getOrderBook:
 
-```
+```javascript
 SingleOrderBook.getOrderBook(); // return Orderbook
 ```
 
 #### updateOrderBook:
 
-```
+```javascript
 SingleOrderBook.updateOrderBook(asks: Order[], bids: Order[]); // Update Orderbook
 ```
 
